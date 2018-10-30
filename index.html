@@ -24,6 +24,8 @@
     <!-- Custom styles for this template -->
     <link href="css/freelancer.min.css" rel="stylesheet"> 
     
+    
+
   </head>
 
   <body id="page-top">
@@ -45,7 +47,7 @@
               <a id="delete" class="portfolio-modal-2" class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio-modal-2">Delete Record</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-              <a id="display" class="portfolio-modal-3" class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio-modal-3">Display Record</a>
+              <a id="display" class="portfolio-modal-3" class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio-modal-3">Display Records</a>
             </li>
           </ul>
         </div>
@@ -127,14 +129,14 @@
         <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
             <i class="fa fa-3x fa-times"></i>
         </a>
-        <div class="container text-center records">
+        <div class="container text-center">
             <div class="row">
-                <div class="col-lg-12 mx-auto">
+                <div class="col-lg-12 mx-auto records">
                     
                 </div>
             </div>
         </div>
-        <div class="container text-center display-record">
+        <!--div class="container text-center display-record">
             <div class="row">
                 <div class="col-lg-12 mx-auto">
                     <h2 class="text-secondary text-uppercase mb-0 record-id">ID: </h2>
@@ -149,7 +151,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div-->
     </div>
 </div>
 
@@ -280,6 +282,40 @@ $('.portfolio-modal-3').magnificPopup({
   type: 'inline'
   // other options
 });
+
+ $('#delete').click(function(e) { 
+          $.ajax({ 
+            type: 'GET', 
+            url: 'https://radiant-stream-61551.herokuapp.com/listRecords', 
+            data: { get_param: 'value' }, 
+            dataType: 'json',
+            success: function (data) { 
+              $.each(data, function(index, element) {
+                 $('.records').append($('<a>', {
+                      text: "<h3>"+element.id+" | "+element.fullName+" | "+element.phone+"</h3>",
+                      href: "https://radiant-stream-61551.herokuapp.com/deleteRecord?id="+element.id
+                  }));
+              });
+            }
+          });
+        });
+
+ $('#display').click(function(e) { 
+          $.ajax({ 
+            type: 'GET', 
+            url: 'https://radiant-stream-61551.herokuapp.com/listRecords', 
+            data: { get_param: 'value' }, 
+            dataType: 'json',
+            success: function (data) { 
+              $.each(data, function(index, element) {
+                  $('.records').append($('<h3>', {
+                      text: element.id+" | "+element.fullName+" | "+element.phone,
+                      link: element.id
+                  }));
+              });
+            }
+          });
+        });
 </script>
 
   </body>

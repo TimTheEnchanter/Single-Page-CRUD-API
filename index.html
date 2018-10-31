@@ -63,11 +63,11 @@
         <hr class="star-light mb-5">
         <div class="row">
           <div class="col-lg-4 ml-auto avg-recs">
-            <p class="lead">Avg. Records Added: </p>
+            <p class="lead">Avg. Records Added: <span id="avg">0</span></p>
           </div>
 
           <div class="col-lg-4 ml-auto avsd">
-            <p class="lead">Added vs. Deleted: </p>
+            <p class="lead">Added vs. Deleted: <span id="avd">0</span></p>
           </div>
          
         </div>
@@ -89,10 +89,10 @@
 
                     <form id="add_record" name="add_record" action="#" method="post">
                       Name:<br>
-                      <input type="text" name="fullName" value="Full Name"><br>
+                      <input type="text" id="fullName" name="fullName" value="Full Name"><br>
                       Phone Number:<br>
-                      <input type="text" name="phoneNumber" value="Phone Number"><br><br>
-                      <input type="submit" value="Submit">
+                      <input type="text" id="phone" name="phoneNumber" value="Phone Number"><br><br>
+                      <input id="add_submit" type="submit" value="Submit">
                     </form>
 
                 </div>
@@ -106,20 +106,14 @@
         <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
             <i class="fa fa-3x fa-times"></i>
         </a>
-        <div class="container text-center display-delete">
+        <div class="container text-center">
             <div class="row">
-                <div class="col-lg-12 mx-auto">
+                <div class="col-lg-12 mx-auto display-delete">
                     
                 </div>
             </div>
         </div>
-        <div class="container text-center delete-record">
-            <div class="row">
-                <div class="col-lg-12 mx-auto">
-                    
-                </div>
-            </div>
-        </div>
+        
     </div>
 </div>
 
@@ -185,73 +179,7 @@
       </a>
     </div>
 
-    <!-- Portfolio Modals -->
-
-    <!-- Portfolio Modal 1 -->
-    <div class="portfolio-modal mfp-hide" id="portfolio-modal-1">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
-              <hr class="star-dark mb-5">
-              <img class="img-fluid mb-5" src="img/portfolio/cabin.png" alt="">
-              <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-                <i class="fa fa-close"></i>
-                Close Project</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Portfolio Modal 2 -->
-    <div class="portfolio-modal mfp-hide" id="portfolio-modal-2">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
-              <hr class="star-dark mb-5">
-              <img class="img-fluid mb-5" src="img/portfolio/cake.png" alt="">
-              <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-                <i class="fa fa-close"></i>
-                Close Project</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Portfolio Modal 3 -->
-    <div class="portfolio-modal mfp-hide" id="portfolio-modal-3">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
-              <hr class="star-dark mb-5">
-              <img class="img-fluid mb-5" src="img/portfolio/circus.png" alt="">
-              <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-                <i class="fa fa-close"></i>
-                Close Project</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+   
 
 
     <!-- Bootstrap core JavaScript -->
@@ -283,6 +211,16 @@ $('.portfolio-modal-3').magnificPopup({
   // other options
 });
 
+$('#add_submit').click(function(e) { 
+         
+      var randID = Math.floor(Math.random()*1E10);
+      var fullName = $("#add_record :input[name='fullName']");
+      var phone = $("#add_record :input[name='phoneNumber']");
+
+      window.location = 'https://radiant-stream-61551.herokuapp.com/addRecord?id='+randID+'&fullName='+fullName+'&phone='+phone;
+
+        });
+
  $('#delete').click(function(e) { 
           $.ajax({ 
             type: 'GET', 
@@ -291,10 +229,10 @@ $('.portfolio-modal-3').magnificPopup({
             dataType: 'json',
             success: function (data) { 
               $.each(data, function(index, element) {
-                 $('.records').append($('<a>', {
-                      text: "<h3>"+element.id+" | "+element.fullName+" | "+element.phone+"</h3>",
+                 $('.display-delete').append($('<a>', {
+                      text: element.id+" | "+element.fullName+" | "+element.phone,
                       href: "https://radiant-stream-61551.herokuapp.com/deleteRecord?id="+element.id
-                  }));
+                  })).append($('<br/>'));
               });
             }
           });
@@ -310,7 +248,7 @@ $('.portfolio-modal-3').magnificPopup({
               $.each(data, function(index, element) {
                   $('.records').append($('<h3>', {
                       text: element.id+" | "+element.fullName+" | "+element.phone,
-                      link: element.id
+                      
                   }));
               });
             }

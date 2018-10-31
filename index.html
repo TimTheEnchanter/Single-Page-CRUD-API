@@ -217,9 +217,16 @@ $('#add_submit').click(function(e) {
       var fullName = $("#add_record :input[name='fullName']");
       var phone = $("#add_record :input[name='phoneNumber']");
 
-      window.location = 'https://radiant-stream-61551.herokuapp.com/addRecord?id='+randID+'&fullName='+fullName+'&phone='+phone;
+      if(fullName !== '' && fullName !== null && phone !== '' && phone !== null)
+      {
+        window.location = 'https://radiant-stream-61551.herokuapp.com/addRecord?id='+randID+'&fullName='+fullName+'&phone='+phone;
+      }
+      else
+      {
+        alert("Please ensure both fields are filled in.");
+      }
 
-        });
+      });
 
  $('#delete').click(function(e) { 
           $.ajax({ 
